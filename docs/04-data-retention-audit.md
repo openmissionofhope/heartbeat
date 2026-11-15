@@ -1,7 +1,7 @@
 # 4. Minimal data model, retention and access audit
 
-Status: **proposal**. No schema exists yet. Retention periods are *(provisional)* and need host and
-legal confirmation.
+Status: **implemented** (`src/db/schema.ts`, `src/domain/retention.ts`). Retention periods are
+*(provisional)* and need host and legal confirmation.
 
 ## 4.1 Rules for every field
 
@@ -53,7 +53,7 @@ erDiagram
 | **Audit event** | see §4.6 | Accountability |
 
 Participant codes are 8 characters from an unambiguous alphabet (no 0/O, 1/I/L) plus a check
-character, e.g. `HB-K7QP-3MXD-R`, randomly generated and unique across all organizations. They
+character (a weighted sum mod 31, which catches every single-character typo and adjacent swap), e.g. `HB-K7QP-3MXD-R`, randomly generated and unique across all organizations. They
 carry no meaning.
 
 ## 4.3 Storage and security baseline
@@ -85,7 +85,7 @@ carry no meaning.
 | Withdrawn or transferred participant | 30 days after it takes effect (90 days if the participant chose "keep so I can rejoin") | Deleted, leaving a tombstone: random id, host, enrollment month, end month, end reason category |
 | `inactive` participant (ended after extended follow-up) | 1 year, so the host recognizes the person if they return | Deleted, tombstone as above |
 | `ended` participant (reported deceased, other documented outcome) | 180 days | Deleted, tombstone as above |
-| Audit events | 2 years. After 90 days, search terms are dropped, and contact and relay events lose their participant id and organization (so the audit trail cannot rebuild a contact history) | Deleted |
+| Audit events | 2 years. After 90 days, search terms are dropped, and contact and relay events lose their participant id (so the audit trail cannot rebuild a contact history) | Deleted |
 | Notification delivery records | 90 days | Deleted |
 | Backups | 30-day rolling, encrypted | Expire; deletions are complete when the last backup containing the data expires |
 | Paper contact forms (outages) | Until entered, target ≤ 3 business days | Shredded; shredding recorded |
@@ -128,9 +128,11 @@ outcome):
 * Sign-ins, failed sign-ins, role and conflict changes, break-glass access, and audit-log views.
 * Every retention-job run and every notification's delivery outcome.
 
-**Integrity.** The application's database account cannot update or delete audit events. Each night
-the day's events are exported to separate storage that the application cannot overwrite. A later
-phase adds a hash chain so gaps or edits are detectable.
+**Integrity.** A trigger rejects updates and deletes of audit events (only redaction of the
+participant link and search terms is allowed, and purging after two years by the retention job);
+in production the application's database role also lacks those privileges. Events are hash-chained.
+Each night the day's event hashes and chain head — no contents — are exported to separate storage
+that the application cannot overwrite, and operators can verify the whole chain.
 
 **Review.** Monthly, the program lead works through a generated exception report and records
 sign-off (itself logged):

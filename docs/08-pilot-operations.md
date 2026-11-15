@@ -63,7 +63,7 @@ Refresher every 6 months, and after any incident.
 | 3. Recording contact: kinds, identity confidence, codes, no location | Contact recorders and above | 20 min |
 | 4. The consent conversation: plain language, teach-back, privacy, no pressure, separate from services and from religious activity | Enrollment workers | 2 h + 2 supervised enrollments |
 | 5. Follow-up practice: consented methods only, permitted messages, making private moments, noticing control, recording certainty, outreach safety | Responders | 2 h |
-| 6. Emergencies and legal duties **outside** Heartbeat: the host's emergency procedures; reporting duties as advised by counsel; what Heartbeat does and does not record | Responders, coordinators, program lead | 1 h |
+| 6. Emergencies and required reports: the host's emergency procedures; OMH's [required-reports policy](safeguarding-reports.md) (child abuse to police and county CPS, partner abuse to police, disabled adults to county APS, never immigration) and how to make a report by phone; what Heartbeat does and does not record | Everyone with a role | 1 h |
 | 7. Coordinating: queue, triage, capacity, closure review, uncovered cases, escalation hold, continuity sheet, paper procedures | Coordinators | 2 h |
 | 8. Program lead: access review, approvals, pause criteria, incidents, legal-process requests | Program lead | 1.5 h |
 | 9. Tabletop exercises of every scenario in [06](06-failure-modes-and-abuse.md) | All role holders | 2 h before Stage A; again before Stage B |
@@ -144,6 +144,6 @@ advice.
   (to be set up in Phase 0).
 * Participants are **not paid to enroll**, because payment could pressure people to join. If decision
   D8 approves it, they are paid for evaluation interviews, which have their own consent
-  ([D8](11-roadmap-and-decisions.md#112-decisions-that-need-you)).
+  ([D8](11-roadmap-and-decisions.md#112-decisions)).
 * If the pilot ends, participants are told at least 30 days ahead where possible and offered
   continuation under the host's own process or withdrawal; data is then deleted on schedule.

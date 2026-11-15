@@ -64,8 +64,8 @@ check in, or to say they are fine, by someone controlling them.
   in-person contact (T-INP).
 * **D** Safety-reducing plan changes made remotely are applied only with `known` or `verified`
   identity and are flagged on the plan and on cases opened within 30 days (HB-ENR-2); remote
-  withdrawal defaults to a pending period with passive follow-up, ending only by an in-person
-  confirmation or a recorded coordinator decision (HB-LIFE-2).
+  withdrawal stops outreach at once but takes effect only when the participant confirms it in
+  person (decision D6, HB-LIFE-2).
 * **D** Screens never say "safe" or "OK" (HB-UI-1), so a recorded contact cannot be mistaken for
   assurance.
 * **O** Training: make private moments ("let's do your paperwork in the office"); notice who is
@@ -91,8 +91,7 @@ participant's card or phone; or uses a court process to obtain records.
   not appear in recorders' name searches (HB-CON-1).
 * **O** A neither-confirm-nor-deny script for every staff member who answers phones or the door.
 * **D** Remote withdrawal, pause and number changes require `known` or `verified` identity, are
-  flagged, and for withdrawal are confirmed in person or by a recorded coordinator decision
-  (HB-ENR-2, HB-LIFE-2).
+  flagged, and a withdrawal takes effect only when confirmed in person (HB-ENR-2, HB-LIFE-2).
 * **D** Named people are chosen by the participant in private, can be removed at any time, and only
   ever hear the participant's permitted message.
 * **D** Staff conflicts and participant-requested exclusions block a staff member from a record
@@ -193,6 +192,7 @@ triggers the pause rules rather than being hidden.
 | Case | Mitigation | Residual |
 |---|---|---|
 | Staff browse records out of curiosity or for personal reasons | Assignment-based access; typed reasons; monthly exception review; host HR consequences (HB-AUD-1, -2) | Detection after the fact |
+| Staff learn of abuse that must be reported | Staff make the report by phone under the [required-reports policy](safeguarding-reports.md); Heartbeat shows who to call and records that it was made, never the details; nobody is reported for immigration | Mandatory police reporting of partner abuse may deter disclosure or raise danger ([risks](safeguarding-reports.md#risks-to-weigh)) |
 | A police officer asks staff whether a person is around or what is known about them | Heartbeat has no police role, export or workflow. Staff follow the host's existing policy for law-enforcement contact. | The host's policy, not the software, governs; it needs [legal review](legal-review.md#15-informal-requests-from-police-or-immigration-officers--blocking-for-training) |
 | Subpoena, court order or warrant for records | Minimal data and short retention; requests routed to host counsel and OMH; policy to require valid process, narrow scope, and tell the participant where lawful | Lawful orders may have to be obeyed; "no integrations" does not mean "no disclosure" |
 | Immigration-enforcement inquiry | No immigration status or proxies are held; same process as above | As above |

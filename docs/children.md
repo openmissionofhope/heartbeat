@@ -5,7 +5,9 @@ but the adult design in this repository is not suitable for them. This page list
 work needed before any version of Heartbeat includes anyone under 18.
 
 **Interim rule.** No one under 18 is enrolled. If a minor asks, staff follow the host's existing
-youth and safeguarding procedures; Heartbeat records nothing about them.
+youth and safeguarding procedures; Heartbeat records nothing about them. Abuse or neglect of a child
+that staff learn about — from anyone — is reported to police and county child protective services
+under OMH's [required-reports policy](safeguarding-reports.md).
 
 ## Why the adult design does not transfer
 

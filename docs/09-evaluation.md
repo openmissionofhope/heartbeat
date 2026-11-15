@@ -102,4 +102,4 @@ two or three anonymized "what happened last time" case reviews — not invented 
 At the end of each stage, OMH and the host produce a short report: the measures above, every pause
 event and why, every incident, and three to five anonymized case narratives agreed with the host.
 If the evaluation is intended for publication as research, decide first whether ethics (IRB) review
-is needed ([decision D8](11-roadmap-and-decisions.md#112-decisions-that-need-you)).
+is needed ([decision D8](11-roadmap-and-decisions.md#112-decisions)).

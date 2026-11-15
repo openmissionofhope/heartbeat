@@ -1,9 +1,9 @@
 # 7. Disaster continuity and cross-organization continuity
 
-Status: **proposal**. §7.1 lists what the MVP must have before Stage A. §7.2 is Stage B (P1).
-§7.3 is designed but deferred until a second host participates (HB-LIFE-4). §7.4 lists later
-enhancements. Sourced facts about Hurricane Helene's disruption in Asheville
-are in [context-and-sources.md](context-and-sources.md#hurricane-helene).
+Status: **built** (2026-11-15). §7.1 must be in place before a host goes live. §7.2 (relays) is used
+from Stage B. §7.3 (transfers) needs a second participating host. §7.4's continuity partner and
+offline recording are built but used only after their own agreements and drills. Sourced facts about
+Hurricane Helene's disruption in Asheville are in [context-and-sources.md](context-and-sources.md#hurricane-helene).
 
 ## Why this matters for Asheville
 

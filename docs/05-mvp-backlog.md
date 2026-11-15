@@ -1,6 +1,7 @@
 # 5. Prioritized MVP backlog
 
-Status: **proposal**. Nothing here is built. IDs are stable so issues can reference them.
+Status: **all items built (2026-11-15)** with automated tests (`tests/`); not deployed. Priorities now
+say when an item is needed in the rollout, not when it gets built. IDs are stable.
 
 * **P0** — required before any real participant is enrolled (pilot Stage A).
 * **P1** — required before Stage B (up to 40 participants and a relay partner).
@@ -77,7 +78,7 @@ Parameters such as T-P1 are defined in [03 §3.2](03-workflow-and-states.md#32-p
 
 ### HB-ENR-3 Participant code and card — P0
 * Codes follow [04 §4.2](04-data-retention-audit.md#42-entities), are unique across organizations,
-  and the check character (e.g. Luhn mod N) catches any single-character typo and most adjacent swaps.
+  and the check character catches every single-character typo and every adjacent swap.
 * A card can be printed (optional) with code, host phone and hours, and how to stop — no name.
 
 ### HB-ENR-4 Duplicate warning — P0
@@ -190,12 +191,12 @@ Parameters such as T-P1 are defined in [03 §3.2](03-workflow-and-states.md#32-p
 * In-person withdrawal is effective immediately; the participant's choice of deletion (within 30
   days) or keeping the record 90 days to rejoin is recorded.
 * Remote withdrawal is applied only with `known` or `verified` identity (otherwise recorded as a
-  lead and the coordinator told), then follows the participant's preference: immediate, or
-  `withdrawal_pending` per [03 §3.10](03-workflow-and-states.md#310-enrollment-states-pauses-plan-changes-and-withdrawal)
+  lead and the coordinator told), then becomes `withdrawal_pending` per
+  [03 §3.10](03-workflow-and-states.md#310-enrollment-states-pauses-plan-changes-and-withdrawal)
   — outreach and clock stop, any open case passes to the coordinator with passive steps only, the
-  coordinator is prompted at any in-person contact, and at T-WD the coordinator must record a
-  decision (program lead told each morning if it is late). Nothing finalizes a pending withdrawal
-  without that decision.
+  coordinator is prompted at any in-person contact and records a review every T-WD (program lead
+  told each morning if late). It takes effect only on in-person confirmation (decision D6); a year
+  of simulated silence leaves it pending (tested).
 * A coordinator can reinstate a withdrawn participant who says in person, before deletion, that they
   did not withdraw.
 * An effective withdrawal closes any open case with reason `withdrawn`. No screen asks the participant to justify
@@ -312,19 +313,20 @@ Parameters such as T-P1 are defined in [03 §3.2](03-workflow-and-states.md#32-p
 * Participant-facing prints (card, consent summary, record summary) exist in English and Spanish;
   other languages by host request.
 
-## P2 — later phases (each needs separate review)
+## P2 — built; off by default or needing review before use
 
-| ID | Item | Why it waits |
+| ID | Item | How it is built, and what must happen before use |
 |---|---|---|
-| HB-P2-1 | Text-message self-check-in | Consent and opt-out rules, 10DLC registration, impersonation, cost; prove the follow-up loop first ([legal-review.md](legal-review.md)). |
-| HB-P2-2 | Phone keypad (IVR) check-in | Same, plus accessibility testing. |
-| HB-P2-3 | Optional photo to tell people apart | High-risk data; needs host and legal decision. |
-| HB-P2-4 | Participant self-view | Needs a safe authentication method without a smartphone. |
-| HB-P2-5 | Continuity-partner activation | Needs multi-org agreements ([07 §7.4](07-disaster-continuity.md#74-later-enhancements)). |
-| HB-P2-6 | Per-participant encryption keys | Makes deletion reach backups immediately. |
-| HB-P2-7 | Offline-capable recording for outreach in dead zones | Paper covers the pilot. |
-| HB-LIFE-4 | Transfer between hosts (designed in [07 §7.3](07-disaster-continuity.md#73-transfer-of-responsibility)) | The pilot has one host; until then, moving away is a withdrawal. |
-| HB-AUD-4 | Hash-chained audit export | Tamper evidence beyond append-only. (Target P1 if time allows.) |
+| HB-P2-1 | Text-message check-ins, reminders and follow-up texts (decision D2) | `src/domain/sms.ts`: per-participant consent, check-in word = verified, any other text = lead, STOP/START/HELP, quiet hours 8 am–9 pm, generic wording. Before use: 10DLC registration and counsel's review of consent wording ([legal-review §10](legal-review.md#10-automated-texts-and-calls--blocking-before-texting-is-used)). |
+| HB-P2-2 | Phone keypad check-ins | TwiML webhooks: 8-digit check-in number with a check digit + PIN; identical replies for unknown numbers and wrong PINs; shares the verification lockout. Before use: accessibility testing with participants. |
+| HB-P2-3 | Optional photo to tell people apart | Off for every host until its program lead turns it on; needs the participant's agreement; JPEG/PNG metadata (including GPS) stripped; encrypted; visible to the assigned responder and to coordinators who give a reason. Before use: host and legal decision. |
+| HB-P2-4 | Participant self-view | `/me`: participant code + verification answer + a one-time code printed by staff (7 days, single use); read-only; 10-minute session; shows the access summary. |
+| HB-P2-5 | Continuity-partner activation | Host program lead activates, or a partner steward requests and an OMH operator approves when no host staff have signed in for 72 hours; 14 days; roster limited to participants who agreed. Before use: multi-organization agreements and a drill. |
+| HB-P2-6 | Per-participant encryption keys | AES-256-GCM field encryption under per-participant keys wrapped by the master key; optional separate key store so deletion reaches backups. |
+| HB-P2-7 | Offline-capable recording | `/offline`: service worker caches the page only; entries (code, kind, identity, time) encrypted in IndexedDB with a non-extractable key; synced when signed in; entries over 72 hours old need approval. |
+| HB-LIFE-4 | Transfer between hosts | Built per [07 §7.3](07-disaster-continuity.md#73-transfer-of-responsibility). Needs a second participating host. |
+| HB-AUD-4 | Hash-chained audit export | Built: chain verified by `npm run cli -- audit-verify`; nightly export of hashes only. |
+| HB-SG-1 | Required abuse reports (OMH policy 2026-11-15) | Built: [safeguarding-reports.md](safeguarding-reports.md). Staff call; Heartbeat records; reminders if not recorded as made; no immigration category (enforced by a database constraint). |
 
 ## Will not build
 

@@ -158,7 +158,7 @@ systems entirely.
 (require valid process, narrow it, notify the participant where lawful)? What honest sentence about
 compelled disclosure belongs in the consent conversation? Does any privilege realistically apply?
 
-## 10. Automated texts and calls — not blocking for the MVP; blocking for HB-P2-1
+## 10. Automated texts and calls — blocking before texting is used
 
 **Law.** The TCPA rules (47 CFR 64.1200(a)(1)(iii)) prohibit autodialed or prerecorded calls,
 including texts, to mobile numbers without prior express consent, except for emergency purposes —
@@ -170,8 +170,10 @@ standard numbers to be registered through The Campaign Registry (10DLC), with ve
 * https://www.ecfr.gov/current/title-47/section-64.1200
 * https://www.federalregister.gov/d/2026-21821
 
-**Question.** If text check-ins are added later, what written consent and opt-out handling are
-required?
+**Questions.** Text check-ins, reminders and follow-up texts are built (decision D2). Is the
+recorded consent at enrollment (a separate, specific choice, with the script version) sufficient
+written consent? Is STOP/START/HELP handling, plus quiet hours, adequate under the current FCC rules?
+What consent wording should the 10DLC campaign registration use?
 
 ## 11. Documenting emergencies and deaths — blocking for training
 
@@ -213,6 +215,26 @@ look up for them, but staff still need a lawful, consistent response.
 **Questions.** What should the host's policy and staff script say? When may staff decline to answer,
 and how should they distinguish a request from a warrant, subpoena or court order? Who on the host's
 side receives formal process, and how is OMH told?
+
+## 16. Reporting intimate-partner abuse to police — blocking
+
+**OMH policy (2026-11-15):** staff report abuse by an intimate partner to police
+([safeguarding-reports.md](safeguarding-reports.md)). This review found no North Carolina statute
+requiring a private nonprofit or its staff to report abuse of a competent adult by a partner to
+police (health-care providers have specific duties for certain injuries, which were not reviewed).
+
+**Questions.** Is any such duty owed? If not, how should the policy be described so participants are
+not misled about the law? How does it interact with VAWA confidentiality if a host is VAWA-funded
+(§7), with victim safety, and with a participant's refusal? Should the policy be revisited with a
+domestic-violence agency?
+
+## Policy decisions that answer part of items 1 and 2
+
+OMH decided on 2026-11-15 that child abuse is reported to police and county child protective
+services, and that a disabled adult who needs protective services is reported to county adult
+protective services, and that nobody is ever reported for possible immigration violations. Counsel
+is still needed on *when* the duties arise, what staff should say and record, and the consent
+wording.
 
 ## Not verified from primary text during this review
 

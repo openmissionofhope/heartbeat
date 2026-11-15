@@ -57,7 +57,7 @@ reason, logged and included in the monthly access review · — not allowed.
 | Enroll; record consent; change plan with participant | — | ✓ | ✓³ | ✓ | ✓ | — | — | — |
 | Record participant's pause or withdrawal request (an effective withdrawal closes any open case, [03 §3.9](03-workflow-and-states.md#39-step-7--closure)) | — | ✓ | ✓ | ✓ | ✓ | — | — | — |
 | Close case: contact restored, recording gap, self-report | — | — | **A** | ✓ | ✓ | — | — | — |
-| Decide a pending remote withdrawal at T-WD | — | — | — | ✓ | ✓ | — | — | — |
+| Review a pending remote withdrawal; after 180 days the program lead may end it as inactive | — | — | — | ✓ | ✓ | — | — | — |
 | Accept an incoming transfer (closes the sending host's case; later phase) | — | — | — | ✓ | ✓ | — | — | — |
 | Close case: ended after extended follow-up, other documented outcome | — | — | propose | propose | **approve** | — | — | — |
 | Close case: reported deceased | — | — | propose | propose | **approve** + a second reviewer who did not propose it | — | — | — |
@@ -99,7 +99,7 @@ coordinator:
 | If someone asks about me | Tell me / don't tell me | Tell me |
 | Staff I don't want to see my record | Named staff | None |
 | Other names staff may see | Listed aliases | None shown to recorders |
-| Remote withdrawal | "If I withdraw by phone or message, confirm with me in person if you see me within 30 days" / "Stop and delete right away" | Confirm |
+| Remote withdrawal | Not a choice (decision D6): a withdrawal asked for by phone or message stops all outreach at once and takes effect when the participant confirms it in person | — |
 | Disaster priority | "Try to reach me sooner after a disaster" — explained as a place near the top of the staff's list, not rescue — with an optional reason category (mobility, medical equipment or medication, other) | Not set |
 | Continuity sharing *(later phase)* | Allow my minimal record to be used by a named continuity partner if my host cannot operate | Not allowed |
 
@@ -119,7 +119,7 @@ withdraw and have their information deleted.
 
 A written agreement between OMH and the host should record these responsibilities, the data roles,
 the retention schedule, incident response, the pilot pause criteria, and what happens to the data if
-either party withdraws ([11 decision D1](11-roadmap-and-decisions.md#d1-who-operates-the-system-and-holds-the-data)).
+either party withdraws ([11 decision D1](11-roadmap-and-decisions.md#112-decisions)).
 
 ## 2.6 Account security baseline
 

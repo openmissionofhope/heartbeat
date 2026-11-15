@@ -50,7 +50,7 @@ contact intervals and grace periods, which participants understand in ordinary d
 | T-EWMAX | Extended watch before program-lead review of whether to continue | 90 calendar days |
 | T-INP | Remote-only contact before an in-person prompt | 60 calendar days (prompt, not a case) |
 | T-PAUSE | Maximum pause | 90 days if agreed in person; 14 days if requested remotely; renewable |
-| T-WD | Remote-withdrawal confirmation window | 30 calendar days |
+| T-WD | Review cadence for a pending remote withdrawal (it takes effect only on in-person confirmation) | 30 calendar days |
 | T-BACK | Maximum backdating of a contact without coordinator approval | 72 hours |
 | CAP-R | Open cases per responder | 6 |
 
@@ -86,8 +86,11 @@ in the participant's language, at about a 6th-grade reading level:
    immigration to get into this system, and we don't share with them. But a court can sometimes order
    records, and then we may have to hand them over — that's one reason we keep so little." (Final
    wording from counsel.) **[legal review]**
-6. *Legal duties.* If counsel confirms a reporting duty applies (for example, North Carolina's duty
-   to report a disabled adult who needs protective services), say so plainly. **[legal review]**
+6. *Reports we must make* (OMH policy, [safeguarding-reports.md](safeguarding-reports.md)): "If you
+   tell us about abuse of a child, about abuse by a partner, or about a disabled adult who needs
+   protection, we must report it — to police for child abuse and partner abuse (and to county social
+   services for a child), and to county social services for a disabled adult. We never report anyone
+   about immigration." **[legal review of wording]**
 7. *Your controls.* The plan, the people we may ask, pausing, stopping, seeing your record.
 8. *Teach-back.* The participant explains in their own words: what happens if they don't come by;
    whether this is emergency help; how to stop. Enrollment proceeds only if they can.
@@ -229,7 +232,7 @@ A case closes only for one of these reasons:
 | `contact_restored` | A linked qualifying contact (§3.5) after the case opened | Assigned responder or coordinator |
 | `contact_restored_self_report` | A linked `self_check_in` the responder judges credible; always included in the coordinator's weekly closure review | Assigned responder or coordinator |
 | `recording_gap` | A qualifying contact that occurred **before the case opened** but was entered afterwards | Assigned responder or coordinator |
-| `withdrawn` | A withdrawal that takes effect per §3.10: in person, verified remote with "stop right away", or the coordinator's decision ending a pending withdrawal | The person recording it (closure is part of recording it) |
+| `withdrawn` | A withdrawal that takes effect per §3.10: made in person, or a remote request confirmed in person | The person recording it (closure is part of recording it) |
 | `transferred` | A transfer accepted by the receiving organization ([07 §7.3](07-disaster-continuity.md#73-transfer-of-responsibility); not built in the pilot) | Receiving organization's coordinator; acceptance closes the sending host's case |
 | `reported_deceased` | Source category (official notification; next of kin with official confirmation; host staff personally confirmed) and approval by the program lead with a second reviewer | Program lead + second reviewer |
 | `ended_after_extended_follow_up` | Extended watch reached T-EWMAX and the program lead decided not to continue; the record states that **this is not a determination that the person has died or is well** | Program lead |
@@ -251,12 +254,13 @@ stateDiagram-v2
     draft --> [*]: abandoned (deleted after 7 days)
     active --> paused: pause recorded
     paused --> active: pause ends / participant resumes
-    active --> withdrawal_pending: verified remote withdrawal, confirm-in-person preference
-    paused --> withdrawal_pending: verified remote withdrawal, confirm-in-person preference
+    active --> withdrawal_pending: verified remote withdrawal
+    paused --> withdrawal_pending: verified remote withdrawal
     withdrawal_pending --> active: participant says in person they did not mean to withdraw
-    withdrawal_pending --> withdrawn: confirmed in person, or coordinator decision at T-WD
-    active --> withdrawn: in-person withdrawal, or verified remote with stop-right-away preference
-    paused --> withdrawn: in-person withdrawal, or verified remote with stop-right-away preference
+    withdrawal_pending --> withdrawn: confirmed in person
+    withdrawal_pending --> inactive: program lead decision after 180 days unconfirmed
+    active --> withdrawn: in-person withdrawal
+    paused --> withdrawn: in-person withdrawal
     withdrawn --> active: participant says in person, before deletion, they did not withdraw
     active --> transfer_pending: participant asks to move to another participating org
     transfer_pending --> active: declined or expired (10 business days)
@@ -290,21 +294,20 @@ follow-up permissions, removing a named person, changing the phone number. Made 
   remotely 3 days before contact stopped"); the next in-person contact prompts the coordinator to
   confirm the change privately with the participant.
 
-**Withdrawal.** Withdrawal is never refused and never questioned beyond one private confirmation.
+**Withdrawal** (decision D6, 2026-11-14). Withdrawal is never refused and never questioned beyond
+one private confirmation.
 
-* *In person*, or *verified remote with the "stop right away" preference*: effective immediately;
-  any open case closes as `withdrawn`. The participant chooses deletion (default; within 30 days,
-  [04 §4.4](04-data-retention-audit.md#44-retention)) or keeping the record 90 days so they can
-  rejoin.
-* *Verified remote with the default "confirm in person" preference*: the participant becomes
-  `withdrawal_pending`. Outreach to them, to named people and to partners stops at once and the
-  clock stops. Any open case passes to the coordinator, limited to **passive** steps (checking
-  records, asking host staff). Any in-person contact prompts the coordinator to confirm privately.
-  At T-WD the coordinator **records a decision**: the withdrawal takes effect (the default), or —
-  only for a specific documented concern such as a concern report or other recent remote changes —
-  one extension of up to 30 days, after which it takes effect. If no decision is recorded within one
-  business day of T-WD, the program lead is told each morning until it is. Silence alone never
-  finalizes it.
+* *In person*: effective immediately; any open case closes as `withdrawn`. The participant chooses
+  deletion (default; within 30 days, [04 §4.4](04-data-retention-audit.md#44-retention)) or keeping
+  the record 90 days so they can rejoin.
+* *Remote* (phone, message, relay), from a caller who is `known` or `verified`: the participant
+  becomes `withdrawal_pending`. Outreach to them, to named people and to partners stops at once and
+  the clock stops. Any open case passes to the coordinator, limited to **passive** steps (checking
+  records, asking host staff). The withdrawal takes effect only when the participant **confirms it
+  in person**; the next in-person contact prompts the coordinator to ask privately. The coordinator
+  records a review every T-WD (30 days); a late review reaches the program lead each morning. After
+  180 days unconfirmed, the program lead may end the enrollment as `inactive` — a documented
+  decision, not a withdrawal and not a judgment about the person. Silence alone never finalizes it.
 * A withdrawn participant who says in person, before deletion, that they did not withdraw is
   reinstated by the coordinator, and the incident is reviewed.
 
@@ -361,7 +364,7 @@ Complete transition table (the implementation and its tests follow this table, n
 | `contact_reported` | Owner confirms the right person | `closed` (`contact_restored` or `recording_gap`) | — |
 | `contact_reported` | Contact voided (wrong person) | `accepted` | Same owner |
 | `accepted`, `extended_watch` | Closure per §3.9 with its evidence and approvals (including `contact_restored_self_report`) | `closed` | — |
-| any open state | Verified remote withdrawal, confirm-in-person preference | `accepted`, flagged *withdrawal pending*, passive steps only | Coordinator |
+| any open state | Verified remote withdrawal | `accepted`, flagged *withdrawal pending*, passive steps only | Coordinator |
 | any open state | Withdrawal takes effect (§3.10) | `closed` (`withdrawn`) | — |
 | any open state | Receiving organization accepts a transfer | `closed` (`transferred`) | — |
 | `closed` | Coordinator reopens within 30 days, or the closing contact is voided | `accepted` | Last owner; if unavailable, `offered` to the next in chain |

@@ -1,6 +1,6 @@
 # 1. Product charter, non-goals and pilot proposal
 
-Status: **proposal**. Nothing in this document is implemented. Numbers marked *(provisional)* are
+Status: **design, implemented in software (2026-11-15)**; not deployed, no participants. Numbers marked *(provisional)* are
 assumptions to be confirmed with a partner organization and qualified reviewers.
 
 ## 1.1 The problem
@@ -80,7 +80,7 @@ Heartbeat will **not**:
 
 | Non-goal | Why |
 |---|---|
-| Integrate with, notify, give access to, or create referral workflows for law enforcement or immigration enforcement | Nonnegotiable boundary. Ordinary follow-up belongs to social-service responders. Legal duties that might involve other agencies are flagged for qualified review and handled under the organization's own policies, outside the software ([legal-review.md](legal-review.md)). |
+| Integrate with, notify, give access to, or send data to law enforcement or immigration enforcement | Nonnegotiable boundary. Ordinary follow-up belongs to social-service responders. **Required abuse reports** (child abuse to police and county CPS; intimate-partner abuse to police; disabled adults to county APS) are made by staff themselves, by phone; Heartbeat only records that they were made, and **never** reports anyone for immigration ([safeguarding-reports.md](safeguarding-reports.md)). |
 | Collect immigration status, citizenship, country of birth, or government ID numbers | Not needed for follow-up; proxies for immigration status are excluded too. |
 | Track location continuously, store movement histories, or record where a person was found | A participant may write a short, editable "where I'm usually found" note for follow-up; contacts themselves carry no location. |
 | Offer public person-search, public status lookup, or confirmation of enrollment to callers | Prevents use by abusers, creditors, or anyone hunting for a person. |
@@ -100,11 +100,11 @@ Heartbeat will **not**:
 | Host | One Asheville-area organization with **existing, frequent, in-person contact** with people experiencing homelessness (a day center, street-outreach team, or low-barrier shelter). Not a domestic-violence agency or VAWA-funded program unless counsel approves a design ([legal-review §7](legal-review.md#7-vawa-confidentiality--blocking)). Not yet identified; no organization has been approached or has agreed to anything. |
 | Participants | Adults 18+ experiencing homelessness (sheltered or unsheltered) who already have some contact with the host, can consent for themselves, and choose to enroll after a consent conversation. Adults under a court-appointed guardianship are excluded until reviewed ([legal-review §12](legal-review.md#12-adults-under-guardianship--blocking-before-including-them)). |
 | Size | **Stage A:** up to 15 participants for 8 weeks. **Stage B:** up to 40 for 16 weeks, only if Stage A meets its gates. *(provisional; capacity formula in [08 §8.2](08-pilot-operations.md#82-capacity))* |
-| Contact methods (MVP) | **Staff-mediated only**: in-person contact at the host and phone contact with a staff member; from Stage B, relays recorded by a partner organization. No automated texting or app ([decision D2](11-roadmap-and-decisions.md#d2-contact-channels-in-the-mvp)). |
+| Contact methods | In-person contact at the host and phone contact with staff; **text-message and phone-keypad check-ins** for participants who choose them (decision D2); from Stage B, relays recorded by a partner organization. No app. |
 | Hours | Host's staffed hours (assumed weekday business hours). Clocks and escalation timers run in business hours. Stated plainly to every participant. |
 | Responders | Host staff (or supervised, trained volunteers if the host already uses them for outreach): one coordinator plus deputy, and four responders (at least three) committing at least 12 hours a week between them. |
 | Second organization | Added only in Stage B, as a **relay partner** that can record a contact for a participant who shows their code, without seeing that person's record ([07 §7.2](07-disaster-continuity.md#72-cross-organization-continuity)). |
-| Software | A small web application hosted off-site (outside western NC), built to the P0 backlog. Not deployed and not used with real people until Phase 2 gates are met ([11](11-roadmap-and-decisions.md)). |
+| Software | Built (the whole backlog). To be hosted off-site (outside western NC). A host enrolls only training participants until its readiness gate — including legal review — passes ([11](11-roadmap-and-decisions.md)). |
 | Before any enrollment | Qualified legal review of the items in [legal-review.md](legal-review.md); written agreement with the host; staff training; tabletop exercises of every scenario in [06](06-failure-modes-and-abuse.md). |
 | Success means | Overdue participants are reliably picked up by a named responder within a business day, follow-up is documented to a reasoned close, participants say they understood and felt respected, no privacy harm occurs, and responder workload stays sustainable ([09](09-evaluation.md)). Not check-in counts. |
 
