@@ -113,6 +113,13 @@ Changing a boundary is a public governance decision by OMH, not a feature reques
 
 [prompts/init.md](prompts/init.md) is the brief this design responds to.
 
+## Acknowledgments
+
+Thank you to Elizabeth Johnson, a friend and former colleague, and to Harland Biggs of NC Baptists
+on Mission, for supporting Heartbeat. Their support is personal; it is not an endorsement by NC
+Baptists on Mission or any other organization, and no organization has agreed to host or partner in
+a pilot.
+
 ## License
 
 Apache License 2.0 — see [LICENSE](LICENSE) and [NOTICE](NOTICE).
