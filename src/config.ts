@@ -83,6 +83,8 @@ export interface Config {
   sms: { provider: SmsProviderKind; twilioAccountSid?: string; twilioAuthToken?: string };
   /** Verify webhook signatures from the SMS/voice provider (always on in production). */
   verifyWebhooks: boolean;
+  /** Demo deployment: every page says so, and no organization can go live. */
+  demo: boolean;
 }
 
 function required(name: string, fallback?: string): string {
@@ -125,6 +127,7 @@ export function loadConfig(overrides: Partial<Config> = {}): Config {
       twilioAuthToken: process.env.TWILIO_AUTH_TOKEN,
     },
     verifyWebhooks: production || process.env.HEARTBEAT_VERIFY_WEBHOOKS === '1',
+    demo: process.env.HEARTBEAT_DEMO === '1',
     ...overrides,
   };
   if (config.sms.provider === 'twilio' && (!config.sms.twilioAccountSid || !config.sms.twilioAuthToken)) {

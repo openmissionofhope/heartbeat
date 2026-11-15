@@ -1,0 +1,11 @@
+node_modules
+dist
+var
+.git
+.github
+tests
+docs
+prompts
+*.md
+!README.md
+.env

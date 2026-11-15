@@ -176,6 +176,7 @@ export async function recordReadiness(ctx: Ctx, actor: Actor, orgId: string, ite
 
 export async function goLive(ctx: Ctx, actor: Actor, orgId: string): Promise<void> {
   requireRole(actor, 'operator');
+  if (ctx.config.demo) fail('This is a demo deployment: organizations stay in training mode and real people must not be enrolled.');
   await ctx.db.tx(async (q) => {
     const org = await getOrg(q, orgId);
     if (org.kind === 'operator') fail('Not applicable.');

@@ -8,6 +8,11 @@ import type { RouteDeps } from '../app.js';
  */
 export async function hookRoutes(app: FastifyInstance, { ctx }: RouteDeps) {
   const verify = (req: FastifyRequest, reply: FastifyReply): boolean => {
+    // Without a real provider in production there is nothing to receive: refuse rather than trust unsigned posts.
+    if (ctx.config.production && ctx.sms.name !== 'twilio') {
+      void reply.code(404).send('not found');
+      return false;
+    }
     if (!ctx.config.verifyWebhooks) return true;
     const url = `${ctx.config.publicUrl}${req.url}`;
     const params = Object.fromEntries(Object.entries((req.body ?? {}) as Record<string, unknown>).map(([k, v]) => [k, String(v)]));

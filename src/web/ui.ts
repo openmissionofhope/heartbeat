@@ -24,6 +24,12 @@ export interface PageOptions {
   scripts?: string[];
 }
 
+let demoMode = false;
+/** Set once at startup: demo deployments show a warning on every page. */
+export function setDemoMode(on: boolean): void {
+  demoMode = on;
+}
+
 export function render(req: FastifyRequest, reply: FastifyReply, o: PageOptions, status = 200): FastifyReply {
   const flashRaw = req.cookies.hb_flash;
   if (flashRaw) reply.clearCookie('hb_flash', { path: '/' });
@@ -87,6 +93,7 @@ function layout(req: FastifyRequest, o: PageOptions, f: { k: string; t: string }
 ${(o.scripts ?? []).map((s) => html`<script src="${s}" defer></script>`)}
 </head>
 <body class="${o.print ? 'print' : ''}">
+${demoMode ? html`<div class="demo" role="note"><strong>Demo.</strong> Made-up information only — do not enter anything about real people. This demo does not send texts or emails.</div>` : ''}
 ${o.print ? '' : html`<a class="skip" href="#main">Skip to content</a>
 <header class="site"><a class="brand" href="/"><b>Heartbeat</b> <small>${req.org?.name ?? 'Open Mission of Hope'}</small></a>${nav(req)}</header>
 ${banner(req)}`}

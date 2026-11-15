@@ -21,15 +21,16 @@ import { participantRoutes } from './routes/participants.js';
 import { partnerRoutes } from './routes/partner.js';
 import { printRoutes } from './routes/prints.js';
 import { publicRoutes } from './routes/public.js';
-import { errorPage, render } from './ui.js';
+import { errorPage, render, setDemoMode } from './ui.js';
 
 export const SESSION_COOKIE = 'hb_session';
 const CSRF_COOKIE = 'hb_csrf';
 
 /** Paths reachable without a fully signed-in (MFA-verified) staff session. */
-const OPEN_PATHS = [/^\/static\//, /^\/login$/, /^\/logout$/, /^\/mfa(\/|$)/, /^\/hooks\//, /^\/me(\/|$)/, /^\/healthz$/, /^\/offline(\.html)?$/, /^\/sw\.js$/];
+const OPEN_PATHS = [/^\/static\//, /^\/livez$/, /^\/login$/, /^\/logout$/, /^\/mfa(\/|$)/, /^\/hooks\//, /^\/me(\/|$)/, /^\/healthz$/, /^\/offline(\.html)?$/, /^\/sw\.js$/];
 
 export async function buildApp(ctx: Ctx): Promise<FastifyInstance> {
+  setDemoMode(ctx.config.demo);
   const app = Fastify({
     trustProxy: ctx.config.trustProxy,
     bodyLimit: 3 * 1024 * 1024,

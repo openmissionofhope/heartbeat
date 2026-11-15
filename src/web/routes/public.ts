@@ -12,6 +12,9 @@ import { type RouteDeps, actorOf, body } from '../app.js';
 import { KIND_LABEL, csrfField, flash, fmtDate, render } from '../ui.js';
 
 export async function publicRoutes(app: FastifyInstance, { ctx }: RouteDeps) {
+  // Liveness for the platform's health check: the process is up. Operational problems are in /healthz.
+  app.get('/livez', async (_req, reply) => reply.send('ok'));
+
   // For an external uptime monitor: fails if any live host's overdue detector is stale (HB-CLK-2).
   app.get('/healthz', async (_req, reply) => {
     try {

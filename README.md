@@ -20,7 +20,8 @@ others. Heartbeat is not emergency help, not a tracker, and not a way to find an
 
 | Part | State |
 |---|---|
-| Software | **Built and tested** (TypeScript, Fastify, PostgreSQL; automated tests against a real database). **Not deployed. No participants.** |
+| Software | **Built and tested** (TypeScript, Fastify, PostgreSQL; automated tests against a real database). |
+| Demo | **https://heartbeat.openmissionofhope.org** (also https://omh-heartbeat.fly.dev): made-up information only; no organization can go live there ([docs/OPERATIONS.md §7](docs/OPERATIONS.md#7-the-demo-deployment)). No real deployment and no real participants. |
 | Readiness gate | Every host starts in training mode (made-up participants only) and cannot go live until it records legal review, a signed agreement, tested consent materials, training, drills, a security review and texting registration, and an OMH operator approves. |
 | Legal review | **Not available yet** — the blocking questions are in [docs/legal-review.md](docs/legal-review.md). |
 | First pilot | Proposed: consenting adults experiencing homelessness in the Asheville, NC area, through one outreach or day-service organization. **No organization has been approached or has agreed to anything.** |

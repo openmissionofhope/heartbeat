@@ -141,3 +141,19 @@ describe('privacy details', () => {
     await auditNow(ctx, host.lead, { action: 'noop' });
   });
 });
+
+describe('demo deployment', () => {
+  it('seeds a training host with made-up participants and refuses to let anyone go live', async () => {
+    ctx.config.demo = true;
+    const { seedDemo } = await import('../src/demo.js');
+    const out = await seedDemo(ctx);
+    expect(out).toContain('lead@demo.heartbeat.test');
+    const org = (await ctx.db.query("SELECT * FROM organizations WHERE name = 'Demo Day Center'")).rows[0]!;
+    expect(org.status).toBe('setup');
+    expect((await ctx.db.query('SELECT count(*)::int AS n FROM participants WHERE org_id = $1 AND training', [org.id])).rows[0]!.n).toBe(3);
+    const op = (await ctx.db.query("SELECT id FROM staff WHERE email = 'operator@demo.heartbeat.test'")).rows[0]!;
+    const actor = (await loadActor(ctx.db, op.id, null))!;
+    await expect(goLive(ctx, actor, org.id)).rejects.toThrow(/demo deployment/);
+    expect(await seedDemo(ctx)).toBe('Demo already seeded.');
+  });
+});

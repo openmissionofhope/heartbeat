@@ -11,7 +11,8 @@ const usage = `Usage:
   heartbeat orgs                                    list organizations
   heartbeat retention                               run retention now
   heartbeat audit-export [YYYY-MM-DD]               export an audit checkpoint
-  heartbeat audit-verify                            verify the audit hash chain`;
+  heartbeat audit-verify                            verify the audit hash chain
+  heartbeat seed-demo                               (demo deployments only) create a training host, accounts and made-up participants`;
 
 if (cmd === 'genkey') {
   console.log(randomBytes(32).toString('base64'));
@@ -28,6 +29,12 @@ try {
       const password = randomBytes(12).toString('base64url');
       await createStaff(ctx, null, { orgId: org.id, email, displayName: name.join(' '), password, roles: ['operator'] });
       console.log(`Operator created. Temporary password: ${password}\nSign in, set up the authenticator, then change the password.`);
+      break;
+    }
+    case 'seed-demo': {
+      if (!ctx.config.demo) throw new Error('seed-demo runs only with HEARTBEAT_DEMO=1.');
+      const { seedDemo } = await import('./demo.js');
+      console.log(await seedDemo(ctx));
       break;
     }
     case 'orgs':

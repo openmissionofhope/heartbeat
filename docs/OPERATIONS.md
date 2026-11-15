@@ -1,7 +1,9 @@
 # Operations
 
-Status: Heartbeat is **not deployed**. This is how OMH would run it once a host and legal review
-exist. Nothing here authorizes enrolling real people: the readiness gate does that, per host.
+Status: a **demo** runs at https://heartbeat.openmissionofhope.org (also
+https://omh-heartbeat.fly.dev) with made-up data only (§7). There is no real deployment. This is how
+OMH would run one once a host and legal review exist. Nothing here authorizes enrolling real people:
+the readiness gate does that, per host.
 
 ## 1. Run it locally
 
@@ -89,3 +91,18 @@ set on Admin.
 | Monthly | Program lead | Access review and sign-off; pause indicators; time logs |
 | Quarterly | OMH operator | Restore drill; `npm run cli -- audit-verify` |
 | Nightly (automatic) | System | Retention, audit export |
+
+## 7. The demo deployment
+
+| Part | Setting |
+|---|---|
+| App | Fly.io `omh-heartbeat`, one `shared-cpu-1x` machine in `iad` (Virginia), [fly.toml](../fly.toml), [Dockerfile](../Dockerfile) |
+| Database | Fly Postgres `omh-heartbeat-db` (single node, 1 GB volume, no managed backups) — fine for a demo, **not** for real data |
+| Demo mode | `HEARTBEAT_DEMO=1`: every page carries a "made-up information only" banner, and no organization can go live |
+| Email and texts | Not configured: notifications are recorded but not delivered; text and keypad webhooks return 404 |
+| Accounts | Created by `node dist/cli.js seed-demo` (run once with `fly ssh console`): an operator, a program lead, a deputy coordinator, a responder and a front-desk recorder at "Demo Day Center", plus three made-up participants |
+| Secrets | `DATABASE_URL`, `HEARTBEAT_MASTER_KEY`, `HEARTBEAT_SECRET` in Fly secrets only |
+| Domain | `heartbeat.openmissionofhope.org`. DNS for `openmissionofhope.org` is hosted by Wix; add one record: CNAME `heartbeat` → `q8091dy.omh-heartbeat.fly.dev`. (Alternatively, as for Agape: A `heartbeat` → `66.241.124.48` plus TXT `_fly-ownership.heartbeat` → `app-q8091dy`.) Fly issues the certificate automatically; check with `fly certs check heartbeat.openmissionofhope.org --app omh-heartbeat`. |
+
+Redeploy with `fly deploy --app omh-heartbeat --ha=false`. Keep it to one machine: the scheduled jobs
+run in the web process.
